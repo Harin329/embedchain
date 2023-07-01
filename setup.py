@@ -5,9 +5,9 @@ with open("README.md", "r", encoding="utf-8") as fh:
 
 setuptools.setup(
     name="embedchain",
-    version="0.0.10",
-    author="Taranjeet Singh",
-    author_email="reachtotj@gmail.com",
+    version="1.0.0",
+    author="Harin Wu",
+    author_email="harinwu99@gmail.com",
     description="embedchain is a framework to easily create LLM powered bots over any dataset",
     long_description=long_description,
     long_description_content_type="text/markdown",
@@ -29,5 +29,7 @@ setuptools.setup(
         "beautifulsoup4",
         "pypdf",
         "pytube",
+        "sentence_transformers",
+        "text_generation",
     ]
 )

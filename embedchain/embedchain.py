@@ -4,6 +4,8 @@ import os
 from dotenv import load_dotenv
 from langchain.docstore.document import Document
 from langchain.embeddings.openai import OpenAIEmbeddings
+from langchain.embeddings.huggingface import HuggingFaceEmbeddings
+from langchain import HuggingFaceTextGenInference
 
 from embedchain.loaders.youtube_video import YoutubeVideoLoader
 from embedchain.loaders.pdf_file import PdfFileLoader
@@ -19,7 +21,10 @@ from embedchain.vectordb.chroma_db import ChromaDB
 
 load_dotenv()
 
-embeddings = OpenAIEmbeddings()
+if os.getenv("USE_OS_EMBEDDINGS"):
+    embeddings = HuggingFaceEmbeddings()
+else:
+    embeddings = OpenAIEmbeddings()
 
 ABS_PATH = os.getcwd()
 DB_DIR = os.path.join(ABS_PATH, "db")
@@ -159,14 +164,28 @@ class EmbedChain:
         messages.append({
             "role": "user", "content": prompt
         })
-        response = openai.ChatCompletion.create(
-            model="gpt-3.5-turbo-0613",
-            messages=messages,
-            temperature=0,
-            max_tokens=1000,
-            top_p=1,
-        )
-        return response["choices"][0]["message"]["content"]
+        if os.getenv("USE_OS_INFERENCES"):
+            response = HuggingFaceTextGenInference(  
+                    inference_server_url=os.getenv("OS_INFERENCE_SERVER_URL"),
+                    max_new_tokens=1000,  
+                    top_k=10,  
+                    top_p=0.95,  
+                    typical_p=0.95,  
+                    temperature=0.01,  
+                    repetition_penalty=1.03,
+                )
+            result = response(prompt)
+            return result
+        else:
+            openai.api_key = os.getenv("OPENAI_API_KEY")
+            response = openai.ChatCompletion.create(
+                model=os.getenv("OPENAI_INFERENCE_MODEL"),
+                messages=messages,
+                temperature=0,
+                max_tokens=1000,
+                top_p=1,
+            )
+            return response["choices"][0]["message"]["content"]
     
     def retrieve_from_database(self, input_query):
         """

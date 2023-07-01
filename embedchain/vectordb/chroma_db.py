@@ -5,10 +5,16 @@ from chromadb.utils import embedding_functions
 
 from embedchain.vectordb.base_vector_db import BaseVectorDB
 
-openai_ef = embedding_functions.OpenAIEmbeddingFunction(
-    api_key=os.getenv("OPENAI_API_KEY"),
-    model_name="text-embedding-ada-002"
-)
+if os.getenv("USE_OS_EMBEDDINGS"):
+    embeddings = embedding_functions.HuggingFaceEmbeddingFunction(
+        api_key=os.getenv("HUGGINGFACE_API_KEY"),
+        model_name=os.getenv("HUGGINGFACE_MODEL")
+    )
+else:
+    embeddings = embedding_functions.OpenAIEmbeddingFunction(
+        api_key=os.getenv("OPENAI_API_KEY"),
+        model_name=os.getenv("OPENAI_MODEL")
+    )
 
 class ChromaDB(BaseVectorDB):
     def __init__(self, db_dir=None):
@@ -26,5 +32,5 @@ class ChromaDB(BaseVectorDB):
 
     def _get_or_create_collection(self):
         return self.client.get_or_create_collection(
-            'embedchain_store', embedding_function=openai_ef,
+            'embedchain_store', embedding_function=embeddings,
         )
