@@ -211,10 +211,10 @@ class EmbedChain:
         :param context: Similar documents to the query used as context.
         :return: The prompt
         """
-        prompt = f"""Use the following pieces of context to answer the query at the end. If you don't know the answer, just say that you don't know, don't try to make up an answer.
+        prompt = f"""Use the following pieces of context to continue the conversation as {os.getenv("BOT_IS")}.
         {context}
-        Query: {input_query}
-        Helpful Answer:
+        {os.getenv("BOT_TALKING_TO")}: {input_query}
+        {os.getenv("BOT_IS")}:
         """
         return prompt
 
