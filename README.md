@@ -1,7 +1,7 @@
 # embedchain
 
 [![](https://dcbadge.vercel.app/api/server/nhvCbCtKV?style=flat)](https://discord.gg/nhvCbCtKV)
-![PyPI](https://img.shields.io/pypi/v/embedchain)
+![PyPI](https://img.shields.io/pypi/v/embedchain-harin)
 
 embedchain is a framework to easily create LLM powered bots over any dataset.
 
@@ -174,7 +174,3 @@ embedchain is built on the following stack:
 - [OpenAI's Ada embedding model](https://platform.openai.com/docs/guides/embeddings) to create embeddings
 - [OpenAI's ChatGPT API](https://platform.openai.com/docs/guides/gpt/chat-completions-api) as LLM to get answers given the context
 - [Chroma](https://github.com/chroma-core/chroma) as the vector database to store embeddings
-
-# Author
-
-* Taranjeet Singh ([@taranjeetio](https://twitter.com/taranjeetio))

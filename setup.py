@@ -4,14 +4,14 @@ with open("README.md", "r", encoding="utf-8") as fh:
     long_description = fh.read()
 
 setuptools.setup(
-    name="embedchain",
-    version="1.0.0",
+    name="embedchain-harin",
+    version="1.0.1",
     author="Harin Wu",
     author_email="harinwu99@gmail.com",
     description="embedchain is a framework to easily create LLM powered bots over any dataset",
     long_description=long_description,
     long_description_content_type="text/markdown",
-    url="https://github.com/embedchain/embedchain",
+    url="https://github.com/harin329/embedchain",
     packages=setuptools.find_packages(),
     classifiers=[
         "Programming Language :: Python :: 3",
